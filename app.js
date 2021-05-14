@@ -38,6 +38,12 @@ function mainMenu(person, people){
   switch(displayOption){
     case "info":
     // TODO: get person's info
+    function getPersonInfo(person){
+      for (let i = 1; i < 10; i++){
+        console.log(person[i]);
+      }
+    }
+    getPersonInfo();
     break;
     case "family":
     // TODO: get person's family
