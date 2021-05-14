@@ -54,7 +54,7 @@ function mainMenu(person, people){
     return mainMenu(person, people); // ask again
   }
 }
-// Add in validation for user prompt!
+
 function searchByName(people){
   let firstName = promptFor("What is the person's first name?", chars);
   let lastName = promptFor("What is the person's last name?", chars);
@@ -68,7 +68,8 @@ function searchByName(people){
     }
   })
   // TODO: find the person using the name they entered
-  return foundPerson[0];
+  console.log(foundPerson[0]);
+  // return foundPerson;
 }
 
 // alerts a list of people
