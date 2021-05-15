@@ -37,13 +37,8 @@ function mainMenu(person, people){
 
   switch(displayOption){
     case "info":
-    // TODO: get person's info
-    function getPersonInfo(person){
-      for (let i = 1; i < 10; i++){
-        console.log(person[i]);
-      }
-    }
-    getPersonInfo();
+      // TODO: get person's info
+      getPersonInfo(person);
     break;
     case "family":
     // TODO: get person's family
@@ -109,4 +104,13 @@ function yesNo(input){
 // helper function to pass in as default promptFor validation
 function chars(input){
   return true; // default validation only
+}
+
+// function that alerts found person's info
+function getPersonInfo(person){
+  let displayInfo = "";// i created an empty string
+  for (let i in person){ // used a for... in loop to grab keys in person array
+    displayInfo += `${i} : ${person[i]}\n`;// since i is the key of person, then personi grabs the value. I could have use the "entries" methode to grab both as well.
+  }
+  alert(displayInfo);// shows results of display info
 }
