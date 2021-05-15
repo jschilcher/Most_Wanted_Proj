@@ -33,7 +33,7 @@ function mainMenu(person, people){
     return app(people); // restart
   }
 
-  let displayOption = prompt("Found " + person.firstName + " " + person.lastName + " . Do you want to know their 'info', 'family', or 'descendants'? Type the option you want or 'restart' or 'quit'");
+  let displayOption = prompt(`Found ${person.firstName} ${person.lastName}. Do you want to know their 'info', 'family', or 'descendants'? Type the option you want or 'restart' or 'quit`);
 
   switch(displayOption){
     case "info":
@@ -41,7 +41,7 @@ function mainMenu(person, people){
       getPersonInfo(person);
     break;
     case "family":
-    // TODO: get person's family
+      getPersonFamily(person);
     break;
     case "descendants":
     // TODO: get person's descendants
@@ -55,6 +55,7 @@ function mainMenu(person, people){
     return mainMenu(person, people); // ask again
   }
 }
+
 // Add in validation for user prompt!
 function searchByName(people){
   let firstName = promptFor("What is the person's first name?", chars);
@@ -77,15 +78,6 @@ function displayPeople(people){
   alert(people.map(function(person){
     return person.firstName + " " + person.lastName;
   }).join("\n"));
-}
-
-function displayPerson(person){
-  // print all of the information about a person:
-  // height, weight, age, name, occupation, eye color.
-  let personInfo = "First Name: " + person.firstName + "\n";
-  personInfo += "Last Name: " + person.lastName + "\n";
-  // TODO: finish getting the rest of the information to display
-  alert(personInfo);
 }
 
 // function that prompts and validates user input
@@ -112,5 +104,35 @@ function getPersonInfo(person){
   for (let i in person){ // used a for... in loop to grab keys in person array
     displayInfo += `${i} : ${person[i]}\n`;// since i is the key of person, then personi grabs the value. I could have use the "entries" methode to grab both as well.
   }
-  alert(displayInfo);// shows results of display info
+  alert(displayInfo);//shows results of display info
+}
+
+//function that alerts person's family
+function getPersonFamily(person){
+
+  let actualPerson = person;
+
+  function findPeopleWithMatchingLastName(person){
+    let foundPersonFamily = data.filter(function(person){
+      if(person.lastName.toLowerCase() === actualPerson.lastName.toLowerCase()){
+        return true;
+      }
+      else{
+        return false;
+      }
+    })
+    return foundPersonFamily;
+  }
+
+
+  let personFamilyArray = findPeopleWithMatchingLastName(person);
+
+
+  let displayFamily = "";// i created an empty string
+  for (let i in personFamilyArray){ // used a for...in loop to grab keys in personFamilyArray 
+  displayFamily += `Person Name: ${personFamilyArray[i].firstName} ${personFamilyArray[i].lastName}\n`;// since i is the key of person, then personi grabs the value. I could have use the "entries" methode to grab both as well.
+  }
+
+  alert(displayFamily);//results of display info  MAY WANT TO INNERHTML THIS INFO
+
 }
