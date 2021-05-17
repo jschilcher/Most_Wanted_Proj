@@ -37,11 +37,10 @@ function mainMenu(person, people){
 
   switch(displayOption){
     case "info":
-      // TODO: get person's info
-      getPersonInfo(person);
+      displayInfo(person);
     break;
     case "family":
-      getPersonFamily(person);
+      displayFamily(person);
     break;
     case "descendants":
     // TODO: get person's descendants
@@ -60,24 +59,11 @@ function mainMenu(person, people){
 function searchByName(people){
   let firstName = promptFor("What is the person's first name?", chars);
   let lastName = promptFor("What is the person's last name?", chars);
-
+  //findPersonByNameInput(firstName,lastName); FOR SOME REASON PEOPLE IS NOT DEFINED IN FUNCTION
   let foundPerson = people.filter(function(person){
-    if(person.firstName.toLowerCase() === firstName.toLowerCase() && person.lastName.toLowerCase() === lastName.toLowerCase()){
-      return true;
-    }
-    else{
-      return false;
-    }
-  })
-  // TODO: find the person using the name they entered
+    if(person.firstName.toLowerCase() === firstName.toLowerCase() && person.lastName.toLowerCase() === lastName.toLowerCase()){return true;}
+    else {return false;}})
   return foundPerson[0];
-}
-
-// alerts a list of people
-function displayPeople(people){
-  alert(people.map(function(person){
-    return person.firstName + " " + person.lastName;
-  }).join("\n"));
 }
 
 // function that prompts and validates user input
@@ -99,40 +85,48 @@ function chars(input){
 }
 
 // function that alerts found person's info
-function getPersonInfo(person){
-  let displayInfo = "";// i created an empty string
-  for (let i in person){ // used a for... in loop to grab keys in person array
-    displayInfo += `${i} : ${person[i]}\n`;// since i is the key of person, then personi grabs the value. I could have use the "entries" methode to grab both as well.
-  }
-  alert(displayInfo);//shows results of display info
+function displayInfo(person){
+  let displayInfoString = "";
+  for (let i in person){displayInfoString += `${i} : ${person[i]}\n`;}
+  
+  alert(displayInfoString);
 }
 
 //function that alerts person's family
-function getPersonFamily(person){
+function displayFamily(person){
 
-  let actualPerson = person;
-
-  function findPeopleWithMatchingLastName(person){
-    let foundPersonFamily = data.filter(function(person){
-      if(person.lastName.toLowerCase() === actualPerson.lastName.toLowerCase()){
-        return true;
-      }
-      else{
-        return false;
-      }
-    })
-    return foundPersonFamily;
-  }
+  findPeopleWithMatchingLastName(person);
 
 
   let personFamilyArray = findPeopleWithMatchingLastName(person);
 
 
-  let displayFamily = "";// i created an empty string
-  for (let i in personFamilyArray){ // used a for...in loop to grab keys in personFamilyArray 
-  displayFamily += `Person Name: ${personFamilyArray[i].firstName} ${personFamilyArray[i].lastName}\n`;// since i is the key of person, then personi grabs the value. I could have use the "entries" methode to grab both as well.
-  }
-
-  alert(displayFamily);//results of display info  MAY WANT TO INNERHTML THIS INFO
-
+  placeFamilyMembersIntoStringAndAlert(personFamilyArray);
 }
+
+//helper function to match people with same last name
+function findPeopleWithMatchingLastName(person){
+  let actualPerson = person;
+  let foundPersonFamily = data.filter(function(person){
+    if(person.lastName.toLowerCase() === actualPerson.lastName.toLowerCase()){return true;} 
+    else {return false;}}) 
+  return foundPersonFamily;
+}
+
+//helper function to place family members into a string and alert
+function placeFamilyMembersIntoStringAndAlert(personFamilyArray) {
+  let displayFamilyString = "";
+  for (let i in personFamilyArray){ // used a for...in loop to grab keys in personFamilyArray 
+    displayFamilyString += `Person Name: ${personFamilyArray[i].firstName} ${personFamilyArray[i].lastName}\n`;
+  }
+  alert(displayFamilyString);
+}
+
+//helper function to find Person by Name Input, but people is not defined inside function.
+/* function findPersonByNameInput(firstName, lastName) {
+  let foundPerson = data.filter(function(person){
+  if(person.firstName.toLowerCase() === firstName.toLowerCase() && person.lastName.toLowerCase() === lastName.toLowerCase()){return true;}
+  else {return false;}})
+  return foundPerson[0]; 
+} */
+
