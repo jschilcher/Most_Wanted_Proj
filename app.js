@@ -43,7 +43,8 @@ function mainMenu(person, people){
       displayFamily(person);
     break;
     case "descendants":
-    // TODO: get person's descendants
+      displayDescendants(person);
+
     break;
     case "restart":
     app(people); // restart
@@ -95,20 +96,23 @@ function displayInfo(person){
 //function that alerts person's family
 function displayFamily(person){
 
-  findPeopleWithMatchingLastName(person);
+  findPeopleWithMatchingLastNameOrSpouseId(person);
 
 
-  let personFamilyArray = findPeopleWithMatchingLastName(person);
+  let personFamilyArray = findPeopleWithMatchingLastNameOrSpouseId(person);
+  //Jasmine Bob is not related to Billy Bob?!?!
+  //She has 2 male parents
 
 
   placeFamilyMembersIntoStringAndAlert(personFamilyArray);
 }
 
 //helper function to match people with same last name
-function findPeopleWithMatchingLastName(person){
+function findPeopleWithMatchingLastNameOrSpouseId(person){
   let actualPerson = person;
   let foundPersonFamily = data.filter(function(person){
     if(person.lastName.toLowerCase() === actualPerson.lastName.toLowerCase()){return true;} 
+    else if(person.currentSpouse === actualPerson.id){return true;}
     else {return false;}}) 
   return foundPersonFamily;
 }
@@ -117,16 +121,36 @@ function findPeopleWithMatchingLastName(person){
 function placeFamilyMembersIntoStringAndAlert(personFamilyArray) {
   let displayFamilyString = "";
   for (let i in personFamilyArray){ // used a for...in loop to grab keys in personFamilyArray 
-    displayFamilyString += `Person Name: ${personFamilyArray[i].firstName} ${personFamilyArray[i].lastName}\n`;
+    displayFamilyString += `Person Name: ${personFamilyArray[i].firstName} ${personFamilyArray[i].lastName}\n`;  
   }
   alert(displayFamilyString);
 }
 
 //helper function to find Person by Name Input, but people is not defined inside function.
 /* function findPersonByNameInput(firstName, lastName) {
+
+
+
   let foundPerson = data.filter(function(person){
   if(person.firstName.toLowerCase() === firstName.toLowerCase() && person.lastName.toLowerCase() === lastName.toLowerCase()){return true;}
   else {return false;}})
   return foundPerson[0]; 
 } */
+
+
+function displayDescendants(person){
+  let actualPerson = person;
+  let descendantsArray = data.filter(function(person){
+  if(person.parents[0] === actualPerson.id || person.parents[1] === actualPerson.id ){return true;}
+  else {return false;}}) 
+  
+  let displayDescendantString = "";
+  for (let i in descendantsArray){
+    displayDescendantString += `Person Name: ${descendantsArray[i].firstName} ${descendantsArray[i].lastName}\n `;
+  }
+  alert(displayDescendantString);
+}
+
+
+
 
