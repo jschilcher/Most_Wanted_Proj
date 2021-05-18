@@ -14,6 +14,7 @@ function app(people){
     case 'no':
       // TODO: search by traits
       searchByTraits(people);
+
       break;
       default:
     app(people); // restart app
@@ -164,10 +165,10 @@ function searchByTraits(people) {
     case "gender":
       displayGenderList(people);
       break;
-    case "family":
-      displayFamily(person);
+    case "eye color":
+      displayEyeColor(people);
       break;
-    case "descendants":
+    case " ":
       displayDescendants(person);
       break;
     case "restart":
@@ -196,6 +197,16 @@ function placeItemsInStringAlert(array) {
   for (let i in array){ // used a for...in loop to grab keys in personFamilyArray 
     displayString += `${i}: ${array[i].firstName} ${array[i].lastName}\n`;  
   }
-  //let userInput = prompt(displayString);
-  }
+  let userInput = prompt(displayString);
+  let userInputArray = [userInput];
+  console.log(userInputArray);
+}
 
+function displayEyeColor(people){
+  let userInputEyeColor = prompt("What color eyes does the person have?");
+  let eyeColorArray = people.filter(function(person){
+    if(person.eyeColor.toLowerCase() === userInputEyeColor.toLowerCase()){return true;}
+    else {return false;}})
+    placeItemsInStringAlert(eyeColorArray);
+    return eyeColorArray;
+}
