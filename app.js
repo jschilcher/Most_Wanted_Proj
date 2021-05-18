@@ -171,6 +171,9 @@ function searchByTraits(people) {
     case "dob":
       displayDateOfBirth(people);
       break;
+    case "height": 
+      displayHeight(people);
+      break;
     case "restart":
       app(people); // restart
       break;
@@ -220,3 +223,12 @@ function displayDateOfBirth(people){
     return dateOfBirthArray;
 } 
     
+function displayHeight(people){
+  let userInputHeight = prompt("What is the persons height in inches?");
+  let heightArray = people.filter(function(person){
+    if(person.height.toLowerCase() === userInputHeight.toLowerCase()){return true;}
+    else {return false;}})
+    placeItemsInStringAlert(heightArray);
+    return heightArray;
+} 
+//This function did not return any array since height is an integer.
