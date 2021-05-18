@@ -174,6 +174,9 @@ function searchByTraits(people) {
     case "height": 
       displayHeight(people);
       break;
+    case "weight": 
+      displayWeight(people);
+      break;
     case "restart":
       app(people); // restart
       break;
@@ -233,4 +236,14 @@ function displayHeight(people){
     console.log(heightArray);
     return heightArray;
 } 
+
+function displayWeight(people){
+  let userInputWeight = prompt("What is the persons weight in inches?");
+  let b = parseInt(userInputWeight)
+  let weightArray = people.filter(function(person){
+    if(person.weight === b){return true;}
+    else {return false;}})
+    placeItemsInStringAlert(weightArray);
+    console.log(weightArray);
+    return weightArray;
 //This function did not return any array since height is an integer.
