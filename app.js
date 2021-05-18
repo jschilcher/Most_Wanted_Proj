@@ -13,6 +13,7 @@ function app(people){
       break;
     case 'no':
       // TODO: search by traits
+      searchByTraits(people);
       break;
       default:
     app(people); // restart app
@@ -78,6 +79,11 @@ function promptFor(question, valid){
 // helper function to pass into promptFor to validate yes/no answers
 function yesNo(input){
   return input.toLowerCase() == "yes" || input.toLowerCase() == "no";
+}
+
+// helper function to pass into promptFor to validate yes/no answers
+function maleFemale(input){
+  return input.toLowerCase() == "male" || input.toLowerCase() == "female";
 }
 
 // helper function to pass in as default promptFor validation
@@ -151,6 +157,45 @@ function displayDescendants(person){
   alert(displayDescendantString);
 }
 
+function searchByTraits(people) {
+  let selectedTrait = promptFor("What trait(s) would you like to search by? Choose gender, eye color, dob, height, weight, occupation, parents, current Spouse", chars);
+  
+  switch(selectedTrait){
+    case "gender":
+      displayGenderList(people);
+      break;
+    case "family":
+      displayFamily(person);
+      break;
+    case "descendants":
+      displayDescendants(person);
+      break;
+    case "restart":
+      app(people); // restart
+      break;
+    case "quit":
+      return; // stop execution
+    default:
+      return mainMenu(person, people); // ask again
+  }
+}
 
+function displayGenderList(people) {
+  let userInputGender = promptFor("What gender is the person?", maleFemale);
 
+  let genderArray = people.filter(function(person){
+  if(person.gender.toLowerCase() === userInputGender.toLowerCase()){return true;}
+  else {return false;}})
+  placeItemsInStringAlert(genderArray);
+  return genderArray; 
+}
+
+//helper function to place family members into a string and alert
+function placeItemsInStringAlert(array) {
+  let displayString = "";
+  for (let i in array){ // used a for...in loop to grab keys in personFamilyArray 
+    displayString += `${i}: ${array[i].firstName} ${array[i].lastName}\n`;  
+  }
+  //let userInput = prompt(displayString);
+  }
 
