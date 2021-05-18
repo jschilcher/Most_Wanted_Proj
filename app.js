@@ -246,4 +246,4 @@ function displayWeight(people){
     placeItemsInStringAlert(weightArray);
     console.log(weightArray);
     return weightArray;
-//This function did not return any array since height is an integer.
+  }
