@@ -168,8 +168,8 @@ function searchByTraits(people) {
     case "eye color":
       displayEyeColor(people);
       break;
-    case " ":
-      displayDescendants(person);
+    case "dob":
+      displayDateOfBirth(people);
       break;
     case "restart":
       app(people); // restart
@@ -210,3 +210,13 @@ function displayEyeColor(people){
     placeItemsInStringAlert(eyeColorArray);
     return eyeColorArray;
 }
+
+function displayDateOfBirth(people){
+  let userInputDateOfBirth = prompt("Date of birith? m/d/yyyy");
+  let dateOfBirthArray = people.filter(function(person){
+    if(person.dob.toLowerCase() === userInputDateOfBirth.toLowerCase()){return true;}
+    else {return false;}})
+    placeItemsInStringAlert(dateOfBirthArray);
+    return dateOfBirthArray;
+} 
+    
