@@ -225,10 +225,12 @@ function displayDateOfBirth(people){
     
 function displayHeight(people){
   let userInputHeight = prompt("What is the persons height in inches?");
+  let b = parseInt(userInputHeight)
   let heightArray = people.filter(function(person){
-    if(person.height.toLowerCase() === userInputHeight.toLowerCase()){return true;}
+    if(person.height === b){return true;}
     else {return false;}})
     placeItemsInStringAlert(heightArray);
+    console.log(heightArray);
     return heightArray;
 } 
 //This function did not return any array since height is an integer.
