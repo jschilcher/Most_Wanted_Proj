@@ -33,14 +33,14 @@ function mainMenu(person, people){
     return app(people); // restart
   }
 
-  let displayOption = prompt("Found " + person.firstName + " " + person.lastName + " . Do you want to know their 'info', 'family', or 'descendants'? Type the option you want or 'restart' or 'quit'");
+  let displayOption = prompt(`Found ${person.firstName} ${person.lastName}. Do you want to know their 'info', 'family', or 'descendants'? Type the option you want or 'restart' or 'quit`);
 
   switch(displayOption){
     case "info":
-    // TODO: get person's info
+      displayInfo(person);
     break;
     case "family":
-    // TODO: get person's family
+      displayFamily(person);
     break;
     case "descendants":
     // TODO: get person's descendants
@@ -55,37 +55,15 @@ function mainMenu(person, people){
   }
 }
 
+// Add in validation for user prompt!
 function searchByName(people){
   let firstName = promptFor("What is the person's first name?", chars);
   let lastName = promptFor("What is the person's last name?", chars);
-
+  //findPersonByNameInput(firstName,lastName); FOR SOME REASON PEOPLE IS NOT DEFINED IN FUNCTION
   let foundPerson = people.filter(function(person){
-    if(person.firstName.toLowerCase() === firstName.toLowerCase() && person.lastName.toLowerCase() === lastName.toLowerCase()){
-      return true;
-    }
-    else{
-      return false;
-    }
-  })
-  // TODO: find the person using the name they entered
-  console.log(foundPerson[0]);
-  // return foundPerson;
-}
-
-// alerts a list of people
-function displayPeople(people){
-  alert(people.map(function(person){
-    return person.firstName + " " + person.lastName;
-  }).join("\n"));
-}
-
-function displayPerson(person){
-  // print all of the information about a person:
-  // height, weight, age, name, occupation, eye color.
-  let personInfo = "First Name: " + person.firstName + "\n";
-  personInfo += "Last Name: " + person.lastName + "\n";
-  // TODO: finish getting the rest of the information to display
-  alert(personInfo);
+    if(person.firstName.toLowerCase() === firstName.toLowerCase() && person.lastName.toLowerCase() === lastName.toLowerCase()){return true;}
+    else {return false;}})
+  return foundPerson[0];
 }
 
 // function that prompts and validates user input
@@ -105,3 +83,50 @@ function yesNo(input){
 function chars(input){
   return true; // default validation only
 }
+
+// function that alerts found person's info
+function displayInfo(person){
+  let displayInfoString = "";
+  for (let i in person){displayInfoString += `${i} : ${person[i]}\n`;}
+  
+  alert(displayInfoString);
+}
+
+//function that alerts person's family
+function displayFamily(person){
+
+  findPeopleWithMatchingLastName(person);
+
+
+  let personFamilyArray = findPeopleWithMatchingLastName(person);
+
+
+  placeFamilyMembersIntoStringAndAlert(personFamilyArray);
+}
+
+//helper function to match people with same last name
+function findPeopleWithMatchingLastName(person){
+  let actualPerson = person;
+  let foundPersonFamily = data.filter(function(person){
+    if(person.lastName.toLowerCase() === actualPerson.lastName.toLowerCase()){return true;} 
+    else {return false;}}) 
+  return foundPersonFamily;
+}
+
+//helper function to place family members into a string and alert
+function placeFamilyMembersIntoStringAndAlert(personFamilyArray) {
+  let displayFamilyString = "";
+  for (let i in personFamilyArray){ // used a for...in loop to grab keys in personFamilyArray 
+    displayFamilyString += `Person Name: ${personFamilyArray[i].firstName} ${personFamilyArray[i].lastName}\n`;
+  }
+  alert(displayFamilyString);
+}
+
+//helper function to find Person by Name Input, but people is not defined inside function.
+/* function findPersonByNameInput(firstName, lastName) {
+  let foundPerson = data.filter(function(person){
+  if(person.firstName.toLowerCase() === firstName.toLowerCase() && person.lastName.toLowerCase() === lastName.toLowerCase()){return true;}
+  else {return false;}})
+  return foundPerson[0]; 
+} */
+
