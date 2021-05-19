@@ -62,7 +62,6 @@ function mainMenu(person, people){
 function searchByName(people){
   let firstName = promptFor("What is the person's first name?", chars);
   let lastName = promptFor("What is the person's last name?", chars);
-  //findPersonByNameInput(firstName,lastName); FOR SOME REASON PEOPLE IS NOT DEFINED IN FUNCTION
   let foundPerson = people.filter(function(person){
     if(person.firstName.toLowerCase() === firstName.toLowerCase() && person.lastName.toLowerCase() === lastName.toLowerCase()){return true;}
     else {return false;}})
@@ -107,8 +106,6 @@ function displayFamily(person){
 
 
   let personFamilyArray = findPeopleWithMatchingLastNameOrSpouseId(person);
-  //Jasmine Bob is not related to Billy Bob?!?!
-  //She has 2 male parents
 
 
   placeFamilyMembersIntoStringAndAlert(personFamilyArray);
@@ -159,23 +156,40 @@ function displayDescendants(person){
 }
 
 function searchByTraits(people) {
-  let selectedTrait = promptFor("What trait(s) would you like to search by? Choose gender, eye color, dob, height, weight, occupation, parents, current Spouse", chars);
+  let selectedTrait = promptFor("What trait(s) would you like to search by? Choose gender, eye color, dob, height, weight, occupation, parents, current spouse, id", chars);
   
   switch(selectedTrait){
     case "gender":
-      displayGenderList(people);
+      let genderListResult = displayGenderList(people);
+      displayInfo(genderListResult);
       break;
+    case "id":
+        let idListResult = displayIdList(people);
+        displayInfo(idListResult);
+        break;
     case "eye color":
-      displayEyeColor(people);
+      let eyeColorResult = displayEyeColor(people);
+      displayInfo(eyeColorResult);
       break;
     case "dob":
-      displayDateOfBirth(people);
+      let dateOfBirthResult = displayDateOfBirth(people);
+      displayInfo(dateOfBirthResult);
       break;
     case "height": 
-      displayHeight(people);
+      let heightResult = displayHeight(people);
+      displayInfo(heightResult);
       break;
     case "weight": 
-      displayWeight(people);
+     let weightResult = displayWeight(people);
+     displayInfo(weightResult);
+      break;
+    case "occupation": 
+      let occupationResult = displayOccupation(people);
+      displayInfo(occupationResult);
+      break;
+    case "current spouse": 
+      let spouseResult = findMatchingSpouse(people)
+      displayInfo(spouseResult);
       break;
     case "restart":
       app(people); // restart
@@ -193,19 +207,25 @@ function displayGenderList(people) {
   let genderArray = people.filter(function(person){
   if(person.gender.toLowerCase() === userInputGender.toLowerCase()){return true;}
   else {return false;}})
-  placeItemsInStringAlert(genderArray);
-  return genderArray; 
+  let userInput = parseInt(prompt(placeItemsInStringAlert(genderArray)));
+
+
+  return genderArray[userInput]; 
 }
 
 //helper function to place family members into a string and alert
 function placeItemsInStringAlert(array) {
-  let displayString = "";
+  let displayString = "Choose the corresponding number\n";
   for (let i in array){ // used a for...in loop to grab keys in personFamilyArray 
-    displayString += `${i}: ${array[i].firstName} ${array[i].lastName}\n`;  
+    displayString += ` ${i}: ${array[i].firstName} ${array[i].lastName}\n`;  
   }
-  let userInput = prompt(displayString);
-  let userInputArray = [userInput];
-  console.log(userInputArray);
+  return (displayString);
+}
+
+function  userInputToPersonName (p){
+  let userIndex = [parseInt(userInput)];
+  alert(array[userIndex]);
+  return array[userIndex];
 }
 
 function displayEyeColor(people){
@@ -213,8 +233,8 @@ function displayEyeColor(people){
   let eyeColorArray = people.filter(function(person){
     if(person.eyeColor.toLowerCase() === userInputEyeColor.toLowerCase()){return true;}
     else {return false;}})
-    placeItemsInStringAlert(eyeColorArray);
-    return eyeColorArray;
+    let userInput = parseInt(prompt(placeItemsInStringAlert(eyeColorArray)));
+    return eyeColorArray[userInput];
 }
 
 function displayDateOfBirth(people){
@@ -222,8 +242,8 @@ function displayDateOfBirth(people){
   let dateOfBirthArray = people.filter(function(person){
     if(person.dob.toLowerCase() === userInputDateOfBirth.toLowerCase()){return true;}
     else {return false;}})
-    placeItemsInStringAlert(dateOfBirthArray);
-    return dateOfBirthArray;
+    let userInput = parseInt(prompt(placeItemsInStringAlert(dateOfBirthArray)));
+    return dateOfBirthArray[userInput];
 } 
     
 function displayHeight(people){
@@ -232,18 +252,55 @@ function displayHeight(people){
   let heightArray = people.filter(function(person){
     if(person.height === b){return true;}
     else {return false;}})
-    placeItemsInStringAlert(heightArray);
-    console.log(heightArray);
-    return heightArray;
+    let userInput = parseInt(prompt(placeItemsInStringAlert(heightArray)));
+    return heightArray[userInput];
 } 
 
 function displayWeight(people){
-  let userInputWeight = prompt("What is the persons weight in inches?");
+  let userInputWeight = prompt("What is the persons weight in pounds?");
   let b = parseInt(userInputWeight)
   let weightArray = people.filter(function(person){
     if(person.weight === b){return true;}
     else {return false;}})
-    placeItemsInStringAlert(weightArray);
-    console.log(weightArray);
-    return weightArray;
+    let userInput = parseInt(prompt(placeItemsInStringAlert(weightArray)));
+    return weightArray[userInput];
+  }
+
+  function displayIdList(people){
+    let userInputId = prompt("What is the persons id number");
+    let b = parseInt(userInputId)
+    let idArray = people.filter(function(person){
+      if(person.id === b){return true;}
+      else {return false;}})
+      let userInput = parseInt(prompt(placeItemsInStringAlert(idArray)));
+      return idArray[userInput];
+    }
+
+  function displayOccupation(people){
+    let userInputOccupation = prompt("What occupation does the person have?");
+    let occupationArray = people.filter(function(person){
+      if(person.occupation.toLowerCase() === userInputOccupation.toLowerCase()){return true;}
+      else {return false;}})
+      let userInput = parseInt(prompt(placeItemsInStringAlert(occupationArray)));
+      return occupationArray[userInput];
+  }
+
+
+
+  function enterCurrentSpouse(people){
+    
+    let userInputCurrentSpouse = prompt("What is the person's spouse first name?");
+    let currentSpouseArray = people.filter(function(person){
+    if(person.firstName.toLowerCase() === userInputCurrentSpouse.toLowerCase()){return true;}
+    else {return false;}})
+    return currentSpouseArray[0].id;
+  }
+
+  function findMatchingSpouse(people){ 
+    let spouseId = enterCurrentSpouse(people);
+    let actualPerson = people.filter(function(person){
+      if(person.currentSpouse === spouseId){return true;}
+      else {return false;}})
+      let userInput = parseInt(prompt(placeItemsInStringAlert(actualPerson)));
+      return actualPerson[userInput];
   }
