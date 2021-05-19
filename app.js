@@ -304,3 +304,12 @@ function displayWeight(people){
       let userInput = parseInt(prompt(placeItemsInStringAlert(actualPerson)));
       return actualPerson[userInput];
   }
+
+  function enterParentName(people){
+    let userInputParent = prompt("What is the person's parent's name?");
+    let parentNameArray = people.filter(function(person){
+      if(person.firstName.toLowerCase() === userInputParent.toLowerCase()){return true;}
+      else {return false;}})
+      return parentNameArray[0].id;
+  }
+  
