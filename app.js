@@ -191,6 +191,9 @@ function searchByTraits(people) {
       let spouseResult = findMatchingSpouse(people)
       displayInfo(spouseResult);
       break;
+    case "parents":
+      let parentResult = findMatchingParent(people);
+      displayInfo(parentResult);  
     case "restart":
       app(people); // restart
       break;
@@ -313,3 +316,11 @@ function displayWeight(people){
       return parentNameArray[0].id;
   }
   
+  function findMatchingParent(people){
+    let parentId = enterParentName(people);
+    let actualPerson = people.filter(function(person){
+      if(person.parents === parentId){return true;}
+      else {return false;}})
+      let userInput = parseInt(prompt(placeItemsInStringAlert(actualPerson)));
+      return actualPerson[userInput];
+  }
